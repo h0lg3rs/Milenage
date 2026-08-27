@@ -1,0 +1,58 @@
+Her er 5 dataset som innholder:
+    K,OP,RAND,SQN,AMF
+    
+Dere skal bergne og skrive ut de manglene "svarene".
+
+Det første data settet er komplett.
+Dere skal fullføre dette resten av testsettene.
+
+$	TEST SET 21 ; Extra-2026
+K:      90dca4ed a45b53cf 0f12d7c9 ff00ff00
+RAND:   9fddc720 92c6ad03 6b6e4647 89315b78
+SQN:    20f813bd 4141
+AMF:    61df
+OP:     3ffcfe5b 7b111158 9920d352 8e84e655
+OPc:    a8bf85ac 76fd86e4 425239a6 17b856ae
+f1:     e19dba10 8a939e67 
+f1*:    2f5f6630 d19a267f 
+f2:     f4fe7be8 a616cfa2 
+f5:     7377d186 47f5
+f3:     763e40ff 2edfc4d4 94db50c4 c4e03861
+f4:     e0dcd466 6d9ada04 934c0409 25100bcc
+f5*:    ad27eb05 f61a
+
+
+Beregn de manglende verdiene for test settene nedenfor.
+Ha printout på samme format for test set 21 (ovenfor).
+
+$	TEST SET 22 ; Extra-2026
+K:      7ea794b8 6bc8762d 7c9b36c5 07388dce
+RAND:   cdb7ba7f b75ef464 2f18e2e3 5decfada
+SQN:    20f813bd 4141
+AMF:    61df
+OP:     3ffcfe5b 7b111158 9920d352 8e84e655
+
+
+$	TEST SET 23 ; Extra-2026
+K:      bf4548d4 a6176612 51ff96fd 2b5e5032
+RAND:   24dff9ce f3c9f890 e4d06e70 99903719
+SQN:    20f813bd 4141
+AMF:    61df
+OP:     3ffcfe5b 7b111158 9920d352 8e84e655
+
+
+$	TEST SET 24 ; Extra-2026
+K:      4ff86923 bdab0cbe db81fd7e 2b053ba1
+RAND:   cd34054c 7c4a3034 3f35ce5a ea0350f1
+SQN:    20f813bd 4141
+AMF:    61df
+OP:     3ffcfe5b 7b111158 9920d352 8e84e655
+
+
+$	TEST SET 25 ; Extra-2026
+K:      a43bf7ef 2877c9b8 f9ac55c1 cca11f0b
+RAND:   1cb5df5a 70b079bc 5fd2c296 44475a87
+SQN:    20f813bd 4141
+AMF:    61df
+OP:     3ffcfe5b 7b111158 9920d352 8e84e655
+
