@@ -1,4 +1,3 @@
-
 #Tok funksjon fra presentasjon slides for å omgjøre ascii til bytes
 def a2b(s:str) -> bytes:
     """"Ascii to bytes"""
@@ -40,10 +39,10 @@ def b2a(b: bytes) -> str:
 
 """Bytes vs bytearray"""
 
-b = bytes(8)
-print(len(b))
-print(b)
-print(b[0])
+#b = bytes(8)
+#print(len(b))
+#print(b)
+#print(b[0])
 
-b[0] = 1
-print(b[0])
+#b[0] = 1
+#print(b[0])
