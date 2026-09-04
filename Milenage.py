@@ -2,12 +2,14 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from test_data import TEST_VECTORS
 from datetime import datetime
 
+#Rotasjons nummer per bit for hver enkelt av output fra f1-f5
 r1 = 64;
 r2 = 0;
 r3 = 32;
 r4 = 64;
 r5 = 96
 
+#Fått disse variablene av KI for å enkleste implementere det inn i koden vi har programert
 c1 = bytes.fromhex("00000000000000000000000000000000")
 c2 = bytes.fromhex("00000000000000000000000000000001")
 c3 = bytes.fromhex("00000000000000000000000000000002")
@@ -84,6 +86,7 @@ def b2a(b: bytes) -> str:
 
 #b2a(rotated)
 
+#Laget en funksjon for å rotere bytes med slicing
 def rot(b: bytes, r: int) -> bytes:
     assert b 
     assert r % 8 == 0
@@ -96,7 +99,7 @@ def rot(b: bytes, r: int) -> bytes:
     
     return(rotated)
 
-#xor
+#Hentet xor funksjonen fra slides for å bruke xor operatoren som er innebygd i python
 
 def xor(a,b:bytes) -> bytes:
     """xor bytes objects, must be same length"""
@@ -110,6 +113,7 @@ def xor(a,b:bytes) -> bytes:
     return bytes(result)
 
 #Encryption
+#Her er selve krypteringen ved bruk av AES128
 
 def E(k, m: bytes) -> bytes:
     #AES128 in ECB mode
@@ -170,11 +174,13 @@ passed = 0
  
 #Hentet fra Claude for å teste gjennom funksjonene vi har laget
 for tv in TEST_VECTORS:
+    #Laget de forskjellige variablene selv, 
+    #men brukt KI for å lettere implementere for testing
     K = a2b(tv["K"])
     SQN = a2b(tv["SQN"])
     AMF = a2b(tv["AMF"])
     RAND = a2b(tv["RAND"])
-    IN1 = SQN+AMF+SQN+AMF # + is concatenation for list-like objects!
+    IN1 = SQN+AMF+SQN+AMF
     OP = a2b(tv["OP"])
     EOP = E(K,OP)
     OPc = xor(OP,EOP)
@@ -206,8 +212,9 @@ for tv in TEST_VECTORS:
     print(b2a(AK))
     print(b2a(AKS))
  
-    # Verify against whatever expected values this test set has (some,
-    # like the Extra-2026 sets you still need to fill in, have none yet).
+    # Verifiserer gjennom å sjekke hva som er forventet output 
+    # og ser om det stemmer med faktisk output.
+    # Siden ekstra testene ikke har noe expected output, så får vi ikke testet dette.
     checks = [
         ("f1", MACA, tv.get("MAC_A")),
         ("f2", RES,  tv.get("RES")),
