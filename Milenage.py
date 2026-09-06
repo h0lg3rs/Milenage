@@ -106,7 +106,6 @@ def verify(name, actual, expected):
  
 #Skriver ut til en tekst-fil med timestamp og om det passerte eller ikke
 def write_log(message):
- 
     with open("milenage_test_log.txt", "a",
               encoding="utf-8") as f:
  
@@ -150,9 +149,7 @@ for tv in TEST_VECTORS:
     AKS  = OUT5[0:6]  #f5*
  
     print()
-    print("=" * 60)
     print(tv["name"])
-    print("=" * 60)
     print("   OPc   ", b2a(OPc))
     print("   f1    ", b2a(MACA))
     print("   f1*   ", b2a(MACS))
@@ -161,7 +158,7 @@ for tv in TEST_VECTORS:
     print("   f4    ", b2a(IK))
     print("   f5    ", b2a(AK))
     print("   f5*   ",b2a(AKS))
-    print(" " * 60)
+    print()
  
     # Verifiserer gjennom å sjekke hva som er forventet output 
     # og ser om det stemmer med faktisk output.
@@ -193,11 +190,9 @@ for tv in TEST_VECTORS:
         else:
             write_log(f"Dataset {tv['name']} FAIL")
     else:
-        print("   (no expected values on file -- nothing to verify)")
+        print("   (nothing to verify)")
  
 print()
-print("=" * 60)
-print(f"RESULTAT: {passed}/{total} PASS")
-print("=" * 60)
- 
-write_log(f"SUMMARY {passed}/{total} PASS")
+print(f"RESULT: {passed}/{total} PASS")
+
+write_log(f"RESULT: {passed}/{total} PASS")
