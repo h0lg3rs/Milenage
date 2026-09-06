@@ -1,12 +1,9 @@
 """
 Test data for Milenage.py.
 
-Each entry is a dict with the K / RAND / SQN / AMF / OP inputs (hex
-strings, spaces allowed) for one test set, plus whichever expected
-outputs are known for it (OPC, MAC_A, MAC_S, RES, CK, IK, AK, AKS).
-Any expected key that is left out is simply skipped when the test
-set is verified, so sets with only inputs (no known answers yet)
-are fine too. Add more sets by appending another dict to TEST_VECTORS.
+Hver test er en dictionary med K, RAND, SQN, AMF og OP inputs.
+Den inneholder også outputs for OPC, MAC_A, MAC_S, RES, CK, IK, AK, AK(resync).
+Noen av testene mangler outputs, men blir bare hoppet over når testene blir gjennomført.
 """
 
 TEST_VECTORS = [

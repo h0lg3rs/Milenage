@@ -9,7 +9,7 @@ r3 = 32;
 r4 = 64;
 r5 = 96
 
-#Fått disse variablene av KI for å enkleste implementere det inn i koden vi har programert
+#Variablene c1-c5 ved bruk av fromhex funksjonen
 c1 = bytes.fromhex("00000000000000000000000000000000")
 c2 = bytes.fromhex("00000000000000000000000000000001")
 c3 = bytes.fromhex("00000000000000000000000000000002")
@@ -51,48 +51,14 @@ def b2a(b: bytes) -> str:
         hexstr = hs + hexstr
     return(hexstr)
 
-#Testing av a2b og b2a funksjonene
-#print(a2b("6cd1c6ce b1e01e14 f1b82316 a90b7f3d"))
-#print(b2a(b'l\xd1\xc6\xce\xb1\xe0\x1e\x14\xf1\xb8#\x16\xa9\x0b\x7f='))
-
-"""Bytes vs bytearray"""
-
-#b = bytes(8)
-#print(len(b))
-#print(b)
-#print(b[0])
-
-#b[0] = 1
-#print(b[0])
-#HER VISES ROT
-
-#b = bytes([i for i in range(16)])
-#print(b2a(b))
-
-# roterer med r1 (den som er 64)
-#r1 = 64
-#tmp = rot(b, r1)
-
-#b2a(tmp)
-
-#HER VISES EGEN IMPLEMENTERING
-
-#r1 = 64 vi vil rotere med 8 bytes
-# dette kan loses med ta bort "end" og sette "top" bakerst
-
-#top = b[0:8]
-#end = b[8:]
-#rotated = end+top
-
-#b2a(rotated)
-
 #Laget en funksjon for å rotere bytes med slicing
 def rot(b: bytes, r: int) -> bytes:
+    #Sjekker om b er noe annet enn bare 0 
+    #og at r er delelig på 8
     assert b 
     assert r % 8 == 0
+    
     tmp_r = r // 8
-    #print(tmp_r)       Testing av tmp_r som skal være rotasjoner man får inn av r1 og deler på 8 for å få hvor mange bytes. f.eks 64/8 = 8
-    #print(type(tmp_r))
     top = b[0:tmp_r]
     end = b[tmp_r:]
     rotated = end+top
@@ -100,11 +66,11 @@ def rot(b: bytes, r: int) -> bytes:
     return(rotated)
 
 #Hentet xor funksjonen fra slides for å bruke xor operatoren som er innebygd i python
-
 def xor(a,b:bytes) -> bytes:
     """xor bytes objects, must be same length"""
-    assert len(a) == len(b), "xor -- input a and b must be same size"
-    assert len(a) > 0,       "xor -- input cannot be zero length"
+    #Sjekker om lengden er lik for begge og at den ikke er 0
+    assert len(a) == len(b)
+    assert len(a) > 0
     
     result = bytearray(len(a))
     
@@ -123,25 +89,7 @@ def E(k, m: bytes) -> bytes:
     encryptor = Cipher(algorithms.AES128(k), modes.ECB()).encryptor()
     return(encryptor.update(m)+encryptor.finalize())
 
-
-# Now we have our E() function
-# From TS 35.207 test set 1 tester vi:
-
-# Key:465b5ce8 b199b49f aa5f0a2e e238a6bc 
-# Plaintext: ee36f7cf 037d37d3 692f7f03 99e7949a
-# Ciphertext: 9e2980c5 9739da67 b136355e 3cede6a2 
-
-
-#k = a2b("465b5ce8 b199b49f aa5f0a2e e238a6bc")
-#m = a2b("ee36f7cf 037d37d3 692f7f03 99e7949a")
-#xc = a2b("9e2980c5 9739da67 b136355e 3cede6a2")
-
-#cc = E(K,m)
-
-#cc == xc som bare viser at man ved bruk av K og m får ut riktig xpected cipher
-
-
-
+#Selve funksjonen for å sjekke om svaret er lik det i test-settet
 def verify(name, actual, expected):
  
     expected_bytes = a2b(expected)
@@ -156,7 +104,7 @@ def verify(name, actual, expected):
  
     return False
  
- 
+#Skriver ut til en tekst-fil med timestamp og om det passerte eller ikke
 def write_log(message):
  
     with open("milenage_test_log.txt", "a",
@@ -168,14 +116,14 @@ def write_log(message):
  
         f.write(f"[{timestamp}] {message}\n")
  
- 
+#Variabler for sjekking om output og test-svar stemmer
 total = 0
 passed = 0
  
-#Hentet fra Copilot for å teste gjennom funksjonene vi har laget
+#En for-løkke som itererer gjennom hver av test-settene i test_data.py
 for tv in TEST_VECTORS:
-    #Laget de forskjellige variablene selv, 
-    #men brukt KI for å lettere implementere for testing
+    #Variabler hentet fra test sett, 
+    #og beregnet svar for de forskjellige variablene
     K = a2b(tv["K"])
     SQN = a2b(tv["SQN"])
     AMF = a2b(tv["AMF"])
@@ -186,6 +134,7 @@ for tv in TEST_VECTORS:
     OPc = xor(OP,EOP)
     TEMP = E(K,xor(RAND,OPc))
  
+    #Output
     OUT1 = xor(E(K,xor(xor(TEMP,rot(xor(IN1,OPc),r1)),c1)),OPc)
     OUT2 = xor(E(K,xor(rot(xor(TEMP,OPc),r2),c2)),OPc)
     OUT3 = xor(E(K,xor(rot(xor(TEMP,OPc),r3),c3)),OPc)
@@ -204,14 +153,15 @@ for tv in TEST_VECTORS:
     print("=" * 60)
     print(tv["name"])
     print("=" * 60)
-    print("OPc: ", b2a(OPc))
-    print("f1: ", b2a(MACA))
-    print("f1*: ", b2a(MACS))
-    print("f2: ", b2a(RES))
-    print("f3: ", b2a(CK))
-    print("f4: ", b2a(IK))
-    print("f5: ", b2a(AK))
-    print("f5*: ",b2a(AKS))
+    print("   OPc   ", b2a(OPc))
+    print("   f1    ", b2a(MACA))
+    print("   f1*   ", b2a(MACS))
+    print("   f2    ", b2a(RES))
+    print("   f3    ", b2a(CK))
+    print("   f4    ", b2a(IK))
+    print("   f5    ", b2a(AK))
+    print("   f5*   ",b2a(AKS))
+    print(" " * 60)
  
     # Verifiserer gjennom å sjekke hva som er forventet output 
     # og ser om det stemmer med faktisk output.
@@ -226,6 +176,7 @@ for tv in TEST_VECTORS:
         ("f5*", AKS, tv.get("AKS"))
     ]
  
+    #Sjekker om testene passerte og skriver til tekst filen
     any_checked = False
     ok = True
     for name, actual, expected in checks:
@@ -233,7 +184,7 @@ for tv in TEST_VECTORS:
             continue
         any_checked = True
         ok &= verify(name, actual, expected)
- 
+    
     if any_checked:
         total += 1
         if ok:
