@@ -172,7 +172,7 @@ def write_log(message):
 total = 0
 passed = 0
  
-#Hentet fra Claude for å teste gjennom funksjonene vi har laget
+#Hentet fra Copilot for å teste gjennom funksjonene vi har laget
 for tv in TEST_VECTORS:
     #Laget de forskjellige variablene selv, 
     #men brukt KI for å lettere implementere for testing
