@@ -204,23 +204,26 @@ for tv in TEST_VECTORS:
     print("=" * 60)
     print(tv["name"])
     print("=" * 60)
-    print(b2a(MACA))
-    print(b2a(MACS))
-    print(b2a(RES))
-    print(b2a(CK))
-    print(b2a(IK))
-    print(b2a(AK))
-    print(b2a(AKS))
+    print("OPc: ", b2a(OPc))
+    print("f1: ", b2a(MACA))
+    print("f1*: ", b2a(MACS))
+    print("f2: ", b2a(RES))
+    print("f3: ", b2a(CK))
+    print("f4: ", b2a(IK))
+    print("f5: ", b2a(AK))
+    print("f5*: ",b2a(AKS))
  
     # Verifiserer gjennom å sjekke hva som er forventet output 
     # og ser om det stemmer med faktisk output.
     # Siden ekstra testene ikke har noe expected output, så får vi ikke testet dette.
     checks = [
         ("f1", MACA, tv.get("MAC_A")),
+        ("f1*", MACS, tv.get("MAC_S")),
         ("f2", RES,  tv.get("RES")),
         ("f3", CK,   tv.get("CK")),
         ("f4", IK,   tv.get("IK")),
         ("f5", AK,   tv.get("AK")),
+        ("f5*", AKS, tv.get("AKS"))
     ]
  
     any_checked = False
